@@ -24,6 +24,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: project.title,
     description: project.tagline,
+    openGraph: {
+      title: project.title,
+      description: project.tagline,
+    },
   };
 }
 
@@ -84,12 +88,12 @@ export default async function ProjectPage({ params }: Props) {
                           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         }
                       >
-                        View Live
+                        Live Demo
                       </Button>
                     )}
                     {project.githubUrl && (
                       <Button href={project.githubUrl} external variant="secondary" icon={<GithubGlyph className="h-4 w-4" />}>
-                        Source
+                        View Source
                       </Button>
                     )}
                   </div>

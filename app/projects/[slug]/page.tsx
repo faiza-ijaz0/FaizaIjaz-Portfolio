@@ -35,7 +35,6 @@ export default async function ProjectPage({ params }: Props) {
   if (!project) notFound();
 
   const { next } = getAdjacentProjects(slug);
-  const showTechnologies = !project.hideTechnologies && project.technologies.length > 0;
 
   return (
     <>
@@ -200,23 +199,7 @@ export default async function ProjectPage({ params }: Props) {
 
             <aside className="lg:col-span-4 lg:col-start-9">
               <div className="sticky top-28 rounded-2xl border border-border p-8">
-                {showTechnologies && (
-                  <>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground-subtle">
-                      Technologies
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.technologies.map((tech) => (
-                        <Badge key={tech}>{tech}</Badge>
-                      ))}
-                    </div>
-                  </>
-                )}
-                <p
-                  className={`${showTechnologies ? "mt-8 " : ""}font-mono text-[11px] uppercase tracking-[0.2em] text-foreground-subtle`}
-                >
-                  Category
-                </p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground-subtle">Category</p>
                 <p className="mt-2 text-sm text-foreground-muted">{project.category}</p>
               </div>
             </aside>

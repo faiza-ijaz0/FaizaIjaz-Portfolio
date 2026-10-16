@@ -45,7 +45,7 @@ export function ProjectsList() {
         {active === "All" ? "" : ` in ${active}`}
       </p>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:gap-8">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:gap-8 xl:grid-cols-3">
         {visible.map((project) => (
           <ProjectCard key={project.slug} project={project} index={projects.indexOf(project)} />
         ))}

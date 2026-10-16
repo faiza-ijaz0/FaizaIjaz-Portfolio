@@ -23,7 +23,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 
         <ProjectMedia
           project={project}
-          sizes="(min-width: 1280px) 560px, (min-width: 640px) 45vw, 100vw"
+          sizes="(min-width: 1280px) 410px, (min-width: 640px) 45vw, 100vw"
           className="relative mb-6 aspect-[16/10] w-full rounded-xl transition-transform duration-700 group-hover:scale-[1.01]"
         />
 
@@ -41,12 +41,6 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         <p className="relative mt-2.5 line-clamp-3 text-[13px] leading-relaxed text-foreground-muted">
           {project.tagline}
         </p>
-
-        {project.technologies.length > 0 && (
-          <p className="relative mt-4 font-mono text-[11px] leading-relaxed text-foreground-subtle">
-            {project.technologies.slice(0, 4).join(" · ")}
-          </p>
-        )}
 
         <div className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-3 pt-5">
           <span

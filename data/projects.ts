@@ -18,7 +18,7 @@ export type Project = {
   description: string;
   category: ProjectCategory;
   year?: string;
-  /** Empty array when the technology stack hasn't been verified yet. */
+  /** Reference metadata only — not displayed on the site. Empty when the stack hasn't been verified. */
   technologies: string[];
   features?: string[];
   problem?: string;
@@ -30,173 +30,10 @@ export type Project = {
   liveUrl?: string;
   /** Real homepage screenshot in /public/projects; the generated visual is used when unset. */
   image?: string;
-  /** Hides the technology list on the detail page, keeping it focused on what the product does. */
-  hideTechnologies?: boolean;
   featured: boolean;
 };
 
 export const projects: Project[] = [
-  {
-    slug: "proposalhub",
-    title: "ProposalHub",
-    tagline:
-      "A client-side proposal and document-generation platform — structured forms, validation, line-item pricing, analytics, and professional PDF export.",
-    description:
-      "ProposalHub is a full-featured proposal management platform — client and service records, line-item pricing, reusable templates, analytics, and branded PDF export — that runs entirely in the browser.",
-    category: "SaaS Platform",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "React Hook Form", "Zod", "Recharts", "jsPDF"],
-    features: [
-      "Proposal builder with line-item pricing and version history",
-      "Reusable proposal templates with schema validation",
-      "Client and service catalog management",
-      "Revenue, volume, and conversion-funnel analytics",
-      "Branded PDF export",
-      "Command palette and rich-text editing",
-    ],
-    problem:
-      "Freelancers and small agencies need a structured way to create, price, and track client proposals without assembling documents by hand in slides or docs.",
-    approach:
-      "Proposals, clients, services, and templates are managed as structured, validated records saved directly in the browser, with dedicated flows for building, analyzing, and exporting proposals.",
-    architecture: [
-      "Dedicated workspaces for the dashboard, proposals, clients, templates, services, and analytics",
-      "Validated forms catch missing or incorrect proposal details before anything is sent to a client",
-      "All data is saved locally in the browser, with no backend or database",
-      "Pricing calculations and PDF export share one source of truth, so every view shows the same totals",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Keeping proposal data consistent across the builder, preview, PDF export, and analytics views without a backend.",
-        solution:
-          "Centralized proposal calculations and summaries so every view reads from the same derived data instead of recomputing it independently.",
-      },
-    ],
-    results: [
-      "Delivered a complete proposal lifecycle — clients, templates, pricing, PDF export, and analytics — as a single client-side application",
-    ],
-    liveUrl: "https://proposalhub-eta.vercel.app/",
-    image: "/projects/proposalhub.webp",
-    hideTechnologies: true,
-    featured: true,
-  },
-  {
-    slug: "multi-tenant-saas-app",
-    title: "Multi-Tenant SaaS App",
-    tagline:
-      "A multi-tenant SaaS platform (SignalBoard) for managing customer feedback — isolated organizations, role-based access, and Postgres Row Level Security enforced at the database layer.",
-    description:
-      "A multi-tenant customer feedback platform (SignalBoard) — isolated organizations, role-based team management, and a branded customer portal, with each organization's data isolated at the database level rather than by application logic alone.",
-    category: "SaaS Platform",
-    technologies: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Row Level Security", "Tailwind CSS", "Chart.js"],
-    features: [
-      "Multi-tenant organizations with complete data isolation",
-      "Brandable, public or invite-only customer feedback portal",
-      "Three-tier role system (Owner / Admin / Member) with granular permissions",
-      "Submission triage queue with comments, voting, and an activity audit log",
-      "Separate authentication flows for internal staff and customers",
-      "Analytics dashboard with charts of feedback activity",
-    ],
-    problem:
-      "Product teams collect customer feedback across scattered channels — email, chat, spreadsheets — with no shared, customer-facing record of what was requested or its status.",
-    approach:
-      "All organizations share a single database, with database-level access rules guaranteeing that each organization only ever sees its own data. The active organization is always determined on the server and never trusted from the browser.",
-    architecture: [
-      "One platform serves both the internal team workspace and a branded, customer-facing feedback portal",
-      "Three layers of access control: data ownership rules, database-level access policies, and in-app permission checks",
-      "Separate sign-in experiences for internal staff and customers, backed by a single identity system",
-      "Database structure and access rules are version-controlled, so every change is reviewable and repeatable",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Preventing organization staff from accessing their own organization's customer-facing portal as a customer.",
-        solution:
-          "Added a dedicated customer-eligibility check on every customer-portal sign-in, separate from the general authentication check.",
-      },
-      {
-        challenge: "Comment author names surface as raw profile IDs in the customer portal rather than resolved names.",
-        solution:
-          "Left unresolved for this release rather than introducing late changes across both sign-in experiences — documented as a known limitation.",
-      },
-    ],
-    results: [
-      "Enforced organization data isolation at the database layer rather than relying on application logic alone",
-      "Verified access boundaries with integration tests run against the real backend instead of mocks",
-    ],
-    liveUrl: "https://multi-tenant-saas-agljaxk9l-faiza-ijaz0s-projects.vercel.app/",
-    hideTechnologies: true,
-    featured: true,
-  },
-  {
-    slug: "coldpilot",
-    title: "ColdPilot",
-    tagline:
-      "A client-side cold outreach platform — generates and scores multi-email sequences using proven copywriting frameworks with niche-specific personalization.",
-    description:
-      "ColdPilot generates, scores, and manages cold email outreach sequences — building 3-email campaigns from proven copywriting frameworks with niche-specific personalization, running entirely in the browser with no external AI services.",
-    category: "SaaS Platform",
-    technologies: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Radix UI", "DOMPurify", "jsPDF", "Vitest"],
-    features: [
-      "3-email sequence generation using AIDA, PAS, BAB, and Problem-Solution frameworks",
-      "Deterministic quality scoring across 8 weighted dimensions",
-      "8 niche-specific personalization templates with contamination protection",
-      "Rich-text email editor with HTML sanitization",
-      "Multi-format export — plain text, Markdown, and PDF",
-      "Analytics dashboard tracking generation volume and quality trends",
-    ],
-    problem:
-      "Writing effective, personalized cold email sequences by hand is slow and inconsistent, and most AI writing tools require sending prospect data to an external API.",
-    approach:
-      "Built a fully client-side generation pipeline: copywriting frameworks define sentence structure, a personalization engine applies niche-specific vocabulary, and a rule-based scorer evaluates the result — without calling an external AI service.",
-    architecture: [
-      "A step-by-step pipeline: choose a framework, apply niche personalization, generate the sequence, score it, then save or export",
-      "Content guards scan generated emails for vocabulary from unrelated industries and regenerate them before falling back to a safe template",
-      "Rule-based scoring instead of AI-based scoring, so the same email always receives the same, explainable score",
-      "Email content is sanitized when pasted, saved, loaded, and displayed, protecting users from unsafe HTML",
-    ],
-    challenges: [
-      {
-        challenge: "Preventing niche-specific vocabulary from leaking across unrelated industries during generation.",
-        solution:
-          "Built content guards that scan each generated email for cross-niche contamination and automatically re-roll it, up to 5 attempts, before falling back to a safe template.",
-      },
-      {
-        challenge: "Keeping exported output identical across plain text, Markdown, and PDF formats.",
-        solution:
-          "Centralized every export through a single transformation step so all formats render from the same normalized data.",
-      },
-    ],
-    results: [
-      "Delivered end-to-end sequence generation, scoring, editing, and export without any backend or external AI dependency",
-      "Covered generation and scoring logic with an automated test suite",
-    ],
-    liveUrl: "https://coldpilot-sandy.vercel.app/",
-    image: "/projects/coldpilot.webp",
-    hideTechnologies: true,
-    featured: true,
-  },
-  {
-    slug: "finance-tracker",
-    title: "Finance Tracker",
-    tagline:
-      "A personal finance dashboard for tracking income, expenses, budgets, and savings — with rule-based insights, achievements, and fully client-side data storage.",
-    description:
-      "A personal finance management application for tracking income, expenses, budgets, and savings — with a rule-based insights engine, an achievement system, and a fully client-side data layer.",
-    category: "Web Application",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Chart.js", "Recharts", "React Hook Form", "Zod"],
-    features: [
-      "Transaction, budget, recurring-expense, and savings tracking",
-      "Rule-based financial insights (spending trends, budget utilization, savings rate)",
-      "Achievement system for financial milestones",
-      "Financial health score",
-      "Charts and statistics dashboards",
-      "Calendar view and data export",
-    ],
-    liveUrl: "https://finance-tracker-alpha-three-84.vercel.app/",
-    image: "/projects/finance-tracker-dashboard.webp",
-    hideTechnologies: true,
-    featured: true,
-  },
   {
     slug: "hk-motors",
     title: "HK Motors",
@@ -277,6 +114,184 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: "ragdoll-properties",
+    title: "Ragdoll Properties",
+    tagline:
+      "A real estate platform for a Dubai property investment firm — off-plan projects, sale and rental listings, an agent directory, and market-insight tools.",
+    description:
+      "Ragdoll Properties is the website for a Dubai real estate firm specializing in off-plan, luxury sales, and rental advisory. It brings together property listings for buying and renting across residential, luxury, and commercial segments, showcases new off-plan projects, and supports investors with market data, area insights, a property calculator, and guides — alongside an agent directory, valuation and selling enquiries, and a wide range of advisory services.",
+    category: "Real Estate",
+    technologies: ["Next.js", "Tailwind CSS", "Supabase"],
+    features: [
+      "Buy and rent listings across property types, with dedicated Luxe and Commercial sections",
+      "Off-plan new-projects showcase and a Dubai projects map",
+      "Market insights: investment analysis, top investment areas, transaction data, and a property calculator",
+      "Agent directory, plus selling and property valuation enquiries",
+      "Services hub covering property management, mortgage advisory, Golden Visa support, and more",
+    ],
+    liveUrl: "https://ragdolproperties.com/",
+    image: "/projects/ragdoll-properties.webp",
+    featured: true,
+  },
+  {
+    slug: "multi-tenant-saas-app",
+    title: "Multi-Tenant SaaS App",
+    tagline:
+      "A multi-tenant SaaS platform (SignalBoard) for managing customer feedback — isolated organizations, role-based access, and tenant data isolation enforced at the database layer.",
+    description:
+      "A multi-tenant customer feedback platform (SignalBoard) — isolated organizations, role-based team management, and a branded customer portal, with each organization's data isolated at the database level rather than by application logic alone.",
+    category: "SaaS Platform",
+    technologies: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Row Level Security", "Tailwind CSS", "Chart.js"],
+    features: [
+      "Multi-tenant organizations with complete data isolation",
+      "Brandable, public or invite-only customer feedback portal",
+      "Three-tier role system (Owner / Admin / Member) with granular permissions",
+      "Submission triage queue with comments, voting, and an activity audit log",
+      "Separate authentication flows for internal staff and customers",
+      "Analytics dashboard with charts of feedback activity",
+    ],
+    problem:
+      "Product teams collect customer feedback across scattered channels — email, chat, spreadsheets — with no shared, customer-facing record of what was requested or its status.",
+    approach:
+      "All organizations share a single database, with database-level access rules guaranteeing that each organization only ever sees its own data. The active organization is always determined on the server and never trusted from the browser.",
+    architecture: [
+      "One platform serves both the internal team workspace and a branded, customer-facing feedback portal",
+      "Three layers of access control: data ownership rules, database-level access policies, and in-app permission checks",
+      "Separate sign-in experiences for internal staff and customers, backed by a single identity system",
+      "Database structure and access rules are version-controlled, so every change is reviewable and repeatable",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Preventing organization staff from accessing their own organization's customer-facing portal as a customer.",
+        solution:
+          "Added a dedicated customer-eligibility check on every customer-portal sign-in, separate from the general authentication check.",
+      },
+      {
+        challenge: "Comment author names surface as raw profile IDs in the customer portal rather than resolved names.",
+        solution:
+          "Left unresolved for this release rather than introducing late changes across both sign-in experiences — documented as a known limitation.",
+      },
+    ],
+    results: [
+      "Enforced organization data isolation at the database layer rather than relying on application logic alone",
+      "Verified access boundaries with integration tests run against the real backend instead of mocks",
+    ],
+    liveUrl: "https://multi-tenant-saas-agljaxk9l-faiza-ijaz0s-projects.vercel.app/",
+    image: "/projects/multi-tenant-saas-app.webp",
+    featured: true,
+  },
+  {
+    slug: "proposalhub",
+    title: "ProposalHub",
+    tagline:
+      "A client-side proposal and document-generation platform — structured forms, validation, line-item pricing, analytics, and professional PDF export.",
+    description:
+      "ProposalHub is a full-featured proposal management platform — client and service records, line-item pricing, reusable templates, analytics, and branded PDF export — that runs entirely in the browser.",
+    category: "SaaS Platform",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "React Hook Form", "Zod", "Recharts", "jsPDF"],
+    features: [
+      "Proposal builder with line-item pricing and version history",
+      "Reusable proposal templates with schema validation",
+      "Client and service catalog management",
+      "Revenue, volume, and conversion-funnel analytics",
+      "Branded PDF export",
+      "Command palette and rich-text editing",
+    ],
+    problem:
+      "Freelancers and small agencies need a structured way to create, price, and track client proposals without assembling documents by hand in slides or docs.",
+    approach:
+      "Proposals, clients, services, and templates are managed as structured, validated records saved directly in the browser, with dedicated flows for building, analyzing, and exporting proposals.",
+    architecture: [
+      "Dedicated workspaces for the dashboard, proposals, clients, templates, services, and analytics",
+      "Validated forms catch missing or incorrect proposal details before anything is sent to a client",
+      "All data is saved locally in the browser, with no backend or database",
+      "Pricing calculations and PDF export share one source of truth, so every view shows the same totals",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Keeping proposal data consistent across the builder, preview, PDF export, and analytics views without a backend.",
+        solution:
+          "Centralized proposal calculations and summaries so every view reads from the same derived data instead of recomputing it independently.",
+      },
+    ],
+    results: [
+      "Delivered a complete proposal lifecycle — clients, templates, pricing, PDF export, and analytics — as a single client-side application",
+    ],
+    liveUrl: "https://proposalhub-eta.vercel.app/",
+    image: "/projects/proposalhub.webp",
+    featured: true,
+  },
+  {
+    slug: "coldpilot",
+    title: "ColdPilot",
+    tagline:
+      "A client-side cold outreach platform — generates and scores multi-email sequences using proven copywriting frameworks with niche-specific personalization.",
+    description:
+      "ColdPilot generates, scores, and manages cold email outreach sequences — building 3-email campaigns from proven copywriting frameworks with niche-specific personalization, running entirely in the browser with no external AI services.",
+    category: "SaaS Platform",
+    technologies: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Radix UI", "DOMPurify", "jsPDF", "Vitest"],
+    features: [
+      "3-email sequence generation using AIDA, PAS, BAB, and Problem-Solution frameworks",
+      "Deterministic quality scoring across 8 weighted dimensions",
+      "8 niche-specific personalization templates with contamination protection",
+      "Rich-text email editor with HTML sanitization",
+      "Multi-format export — plain text, Markdown, and PDF",
+      "Analytics dashboard tracking generation volume and quality trends",
+    ],
+    problem:
+      "Writing effective, personalized cold email sequences by hand is slow and inconsistent, and most AI writing tools require sending prospect data to an external API.",
+    approach:
+      "Built a fully client-side generation pipeline: copywriting frameworks define sentence structure, a personalization engine applies niche-specific vocabulary, and a rule-based scorer evaluates the result — without calling an external AI service.",
+    architecture: [
+      "A step-by-step pipeline: choose a framework, apply niche personalization, generate the sequence, score it, then save or export",
+      "Content guards scan generated emails for vocabulary from unrelated industries and regenerate them before falling back to a safe template",
+      "Rule-based scoring instead of AI-based scoring, so the same email always receives the same, explainable score",
+      "Email content is sanitized when pasted, saved, loaded, and displayed, protecting users from unsafe HTML",
+    ],
+    challenges: [
+      {
+        challenge: "Preventing niche-specific vocabulary from leaking across unrelated industries during generation.",
+        solution:
+          "Built content guards that scan each generated email for cross-niche contamination and automatically re-roll it, up to 5 attempts, before falling back to a safe template.",
+      },
+      {
+        challenge: "Keeping exported output identical across plain text, Markdown, and PDF formats.",
+        solution:
+          "Centralized every export through a single transformation step so all formats render from the same normalized data.",
+      },
+    ],
+    results: [
+      "Delivered end-to-end sequence generation, scoring, editing, and export without any backend or external AI dependency",
+      "Covered generation and scoring logic with an automated test suite",
+    ],
+    liveUrl: "https://coldpilot-sandy.vercel.app/",
+    image: "/projects/coldpilot.webp",
+    featured: true,
+  },
+  {
+    slug: "finance-tracker",
+    title: "Finance Tracker",
+    tagline:
+      "A personal finance dashboard for tracking income, expenses, budgets, and savings — with rule-based insights, achievements, and fully client-side data storage.",
+    description:
+      "A personal finance management application for tracking income, expenses, budgets, and savings — with a rule-based insights engine, an achievement system, and a fully client-side data layer.",
+    category: "Web Application",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Chart.js", "Recharts", "React Hook Form", "Zod"],
+    features: [
+      "Transaction, budget, recurring-expense, and savings tracking",
+      "Rule-based financial insights (spending trends, budget utilization, savings rate)",
+      "Achievement system for financial milestones",
+      "Financial health score",
+      "Charts and statistics dashboards",
+      "Calendar view and data export",
+    ],
+    liveUrl: "https://finance-tracker-alpha-three-84.vercel.app/",
+    image: "/projects/finance-tracker-dashboard.webp",
+    featured: true,
+  },
+  {
     slug: "mirrors-beauty-lounge",
     title: "Mirrors Beauty Lounge",
     tagline:
@@ -314,26 +329,6 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://silvermaid-cg2i.vercel.app/",
     image: "/projects/silvermaid.webp",
-    featured: true,
-  },
-  {
-    slug: "ragdoll-properties",
-    title: "Ragdoll Properties",
-    tagline:
-      "A real estate platform for a Dubai property investment firm — off-plan projects, sale and rental listings, an agent directory, and market-insight tools.",
-    description:
-      "Ragdoll Properties is the website for a Dubai real estate firm specializing in off-plan, luxury sales, and rental advisory. It brings together property listings for buying and renting across residential, luxury, and commercial segments, showcases new off-plan projects, and supports investors with market data, area insights, a property calculator, and guides — alongside an agent directory, valuation and selling enquiries, and a wide range of advisory services.",
-    category: "Real Estate",
-    technologies: ["Next.js", "Tailwind CSS", "Supabase"],
-    features: [
-      "Buy and rent listings across property types, with dedicated Luxe and Commercial sections",
-      "Off-plan new-projects showcase and a Dubai projects map",
-      "Market insights: investment analysis, top investment areas, transaction data, and a property calculator",
-      "Agent directory, plus selling and property valuation enquiries",
-      "Services hub covering property management, mortgage advisory, Golden Visa support, and more",
-    ],
-    liveUrl: "https://ragdolproperties.com/",
-    image: "/projects/ragdoll-properties.webp",
     featured: true,
   },
 ];

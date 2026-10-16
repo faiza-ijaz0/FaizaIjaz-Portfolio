@@ -24,7 +24,7 @@ No confirmed production deployment URL at this time. `data/site.ts` configures a
 - Luxury, editorial-style responsive UI
 - Dark/light theme with a persisted preference
 - Responsive navigation with an animated mobile menu
-- Project showcase with detailed, per-project case studies
+- Project showcase with category filters, live-site screenshots, and per-project detail pages
 - Framer Motion scroll-reveal and micro-interaction animations
 - Accessibility considerations — skip-to-content link, keyboard-navigable interactive elements, visible focus states, reduced-motion support
 - SEO metadata (per-page titles/descriptions, Open Graph)
@@ -44,23 +44,32 @@ No confirmed production deployment URL at this time. `data/site.ts` configures a
 
 Individual project case studies are served from a dynamic route, `app/projects/[slug]/page.tsx`, statically generated per project via `generateStaticParams`.
 
-## Featured Projects
+## Projects
 
-**ProposalHub** — A client-side proposal and document-generation platform with structured forms, validation, line-item pricing, analytics, and PDF export.
-GitHub: https://github.com/faiza-ijaz0/Proposalhub
-Live Demo: https://proposalhub-eta.vercel.app/
+The Projects page (`/projects`) showcases 11 live projects, filterable by category. Each project has its own detail page with a description, key features, verified technologies, and a link to the live website. Project content lives in `data/projects.ts`.
 
-**Multi-Tenant SaaS App (SignalBoard)** — A multi-tenant customer feedback platform with isolated organizations and tenant data isolation enforced by Postgres Row Level Security.
-GitHub: https://github.com/faiza-ijaz0/multi-tenant-SaaSApp
-Live Demo: https://multi-tenant-saas-agljaxk9l-faiza-ijaz0s-projects.vercel.app/
+### Product Builds
 
-**ColdPilot** — A client-side cold email outreach platform that generates and scores multi-email sequences using proven copywriting frameworks with niche-specific personalization.
-GitHub: https://github.com/faiza-ijaz0/coldpilot
-Live Demo: https://coldpilot-sandy.vercel.app/
+| Project | Category | Live Website |
+| --- | --- | --- |
+| **ProposalHub** — client-side proposal and document-generation platform with line-item pricing, analytics, and PDF export | SaaS Platform | https://proposalhub-eta.vercel.app/ |
+| **Multi-Tenant SaaS App (SignalBoard)** — multi-tenant customer feedback platform with tenant isolation enforced by Postgres Row Level Security | SaaS Platform | https://multi-tenant-saas-agljaxk9l-faiza-ijaz0s-projects.vercel.app/ |
+| **ColdPilot** — client-side cold email platform that generates and scores multi-email sequences from proven copywriting frameworks | SaaS Platform | https://coldpilot-sandy.vercel.app/ |
+| **Finance Tracker** — personal finance dashboard for income, expenses, budgets, and savings with rule-based insights | Web Application | https://finance-tracker-alpha-three-84.vercel.app/ |
 
-**Finance Tracker** — A personal finance dashboard for tracking income, expenses, budgets, and savings, with rule-based insights and a fully client-side data layer.
-GitHub: https://github.com/faiza-ijaz0/FinanceTracker
-Live Demo: https://finance-tracker-alpha-three-84.vercel.app/
+### Client Websites
+
+| Project | Category | Live Website |
+| --- | --- | --- |
+| **HK Motors** — car dealership website with a filterable vehicle inventory and per-vehicle listing pages | Automotive | https://hk-motors.vercel.app/ |
+| **Homework UAE** — cleaning-services website for Dubai and Abu Dhabi with starting prices, bundles, and online booking and quote flows | Cleaning Services | https://www.homeworkuae.com/ |
+| **Man of Cave** — men's grooming-studio platform with multi-step appointment booking, a product shop, and customer accounts | Beauty & Wellness | https://manofcave.ae/ |
+| **Jam Beauty Lounge** — multi-branch ladies' salon website with dedicated service pages and WhatsApp-based booking | Beauty & Wellness | https://jambeautylounge.com/ |
+| **Mirrors Beauty Lounge** — salon and home-service booking platform with branch, staff, and time-slot selection | Beauty & Wellness | https://mirrorsbeautylounge.ae/ |
+| **Silvermaid** — Dubai cleaning-services website with categorized services, multi-step booking, and quote requests | Cleaning Services | https://silvermaid-cg2i.vercel.app/ |
+| **Ragdoll Properties** — Dubai real estate platform with buy/rent listings, off-plan projects, agents, and market insights | Real Estate | https://ragdolproperties.com/ |
+
+Project thumbnails in `public/projects/` are homepage screenshots captured from each live website. Projects without a screenshot fall back to a generated visual.
 
 ## Development Setup
 
@@ -102,6 +111,7 @@ components/
 data/                Typed content: site config, nav, projects, services, skills, capabilities, experience
 lib/                 Shared utilities
 public/              Static assets
+  projects/            Live-site screenshots used on project cards and detail pages
 ```
 
 ## Quality
@@ -114,7 +124,7 @@ No automated test suite is included in this repository.
 
 ## Design
 
-The portfolio follows a dark-first, luxury editorial aesthetic — a restrained warm accent color against a near-black base, serif display type paired with a clean sans body face, and generous whitespace over dense layouts. A light theme is fully supported and maintains the same visual system. Motion is used deliberately (scroll reveals, hover states, page transitions) rather than decoratively, and the layout is typography-focused throughout, letting content — not imagery — carry each page.
+The portfolio follows a dark-first, luxury editorial aesthetic — a restrained warm accent color against a near-black base, serif display type paired with a clean sans body face, and generous whitespace over dense layouts. A light theme is fully supported and maintains the same visual system. Motion is used deliberately (scroll reveals, hover states, page transitions) rather than decoratively, and the layout is typography-focused throughout, with real project screenshots as the only imagery.
 
 ## Contact
 

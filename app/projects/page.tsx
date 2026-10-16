@@ -5,7 +5,7 @@ import { ProjectsList } from "@/components/sections/projects-list";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: `A selection of platforms and products built by ${siteConfig.name} — SaaS platforms and full-stack web applications, engineered end to end.`,
+  description: `A selection of platforms and products built by ${siteConfig.name} — SaaS platforms, full-stack web applications, and live client websites, engineered end to end.`,
 };
 
 export default function ProjectsPage() {
